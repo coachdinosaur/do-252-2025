@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D.O. 252-25 OSH Learning Hub | Revised IRR of R.A. 11058</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            navy: {
+              950: '#080E1A',
+              900: '#0F172A',
+              800: '#1E293B',
+              700: '#334155',
+            },
+            safety: {
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+            },
+            emerald: {
+              500: '#10B981',
+              600: '#059669',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom Styles for 3D Flashcards & Smooth Transitions -->
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #F8FAFC;
+      color: #0F172A;
+    }
+
+    /* 3D Flashcard Flip Mechanics */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+
+    /* Subtle fade-in animation for view switching */
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-view {
+      animation: fadeInSlide 0.25s ease-out forwards;
+    }
+
+    /* Custom scrollbar for horizontal tabs on mobile */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased selection:bg-amber-200 selection:text-slate-900">
+
+  <!-- ===================================================================== -->
+  <!-- TOP HEADER WITH BRANDING, LEGAL BADGE & OVERALL PROGRESS TRACKER      -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-navy-900 text-white shadow-lg border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3.5">
+        <!-- Brand & Legal Badge -->
+        <div class="flex items-start sm:items-center gap-3.5">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-navy-900 flex items-center justify-center shadow-md shadow-amber-500/20">
+            <!-- Shield Check Icon -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <div class="flex flex-wrap items-center gap-2">
+              <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white leading-tight">
+                D.O. 252-25 OSH Learning Hub
+              </h1>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-400/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                Revised IRR of R.A. 11058 &bull; Effective May 16, 2025
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5 hidden sm:block">
+              Interactive Guide to DOLE Department Order No. 252, Series of 2025 (Philippines)
+            </p>
+          </div>
+        </div>
+
+        <!-- Overall Learning Progress Bar -->
+        <div class="flex items-center gap-4 bg-navy-800/90 border border-slate-700/80 rounded-xl px-3.5 py-2.5 lg:min-w-[300px]">
+          <div class="flex-1">
+            <div class="flex items-center justify-between text-xs font-medium mb-1.5">
+              <span class="text-slate-300">Learning Progress</span>
+              <span id="overall-progress-label" class="text-emerald-400 font-bold">0% (0/5)</span>
+            </div>
+            <div class="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
+              <div id="overall-progress-bar" class="h-full bg-gradient-to-r from-amber-400 to-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+          <button
+            id="reset-progress-btn"
+            type="button"
+            title="Reset saved progress"
+            class="text-xs text-slate-400 hover:text-amber-300 transition-colors px-2 py-1 rounded-lg hover:bg-slate-700/60 flex-shrink-0"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Inline Reset Confirmation Bar (hidden by default, avoids browser confirm()) -->
+      <div id="reset-confirm-bar" class="hidden mt-3 p-2.5 rounded-xl bg-amber-500/15 border border-amber-400/30 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <span class="text-amber-200 font-medium">Reset all completed modules, flashcard mastery, and quiz progress?</span>
+        <div class="flex items-center gap-2">
+          <button id="confirm-reset-yes" type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-navy-900 font-bold transition-colors">
+            Yes, Reset
+          </button>
+          <button id="confirm-reset-no" type="button" class="px-3 py-1 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-medium transition-colors">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Primary Navigation Tabs -->
+    <nav class="bg-navy-800/70 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar py-2" role="tablist" aria-label="Main Sections">
+          <button
+            type="button"
+            data-tab="modules"
+            class="nav-tab flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+            </svg>
+            <span>Learn Modules</span>
+            <span id="nav-modules-badge" class="text-[11px] px-1.5 py-0.5 rounded-full bg-slate-700 text-slate-200">0/4</span>
+          </button>
+
+          <button
+            type="button"
+            data-tab="estimator"
+            class="nav-tab flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+            </svg>
+            <span>Compliance Estimator</span>
+          </button>
+
+          <button
+            type="button"
+            data-tab="flashcards"
+            class="nav-tab flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
+            </svg>
+            <span>Flashcards</span>
+            <span id="nav-flashcards-badge" class="text-[11px] px-1.5 py-0.5 rounded-full bg-slate-700 text-slate-200">12</span>
+          </button>
+
+          <button
+            type="button"
+            data-tab="quiz"
+            class="nav-tab flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+            </svg>
+            <span>Knowledge Quiz</span>
+            <span id="nav-quiz-badge" class="text-[11px] px-1.5 py-0.5 rounded-full bg-slate-700 text-slate-200">10 Qs</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN CONTENT AREA                                                     -->
+  <!-- ===================================================================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+    <!-- =================================================================== -->
+    <!-- VIEW 1: LEARN MODULES                                               -->
+    <!-- =================================================================== -->
+    <section id="view-modules" class="view-section animate-view">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <!-- Module Sidebar / Selector -->
+        <aside class="lg:col-span-3 space-y-2.5 lg:sticky lg:top-36">
+          <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3 px-1">Course Modules</h2>
+            <div id="module-sidebar-list" class="space-y-2">
+              <!-- Populated dynamically via JS -->
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 px-1 flex items-center justify-between">
+              <span>Completed</span>
+              <span id="sidebar-module-count" class="font-bold text-slate-800">0 of 4</span>
+            </div>
+          </div>
+
+          <!-- Quick Legal Reference Card -->
+          <div class="bg-navy-900 text-white rounded-2xl p-4 shadow-sm hidden lg:block">
+            <div class="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              </svg>
+              DOLE Hotline
+            </div>
+            <p class="text-2xl font-extrabold tracking-tight text-white">1349</p>
+            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+              24/7 hotline for reporting workplace accidents, imminent dangers, and OSH inquiries across the Philippines.
+            </p>
+          </div>
+        </aside>
+
+        <!-- Active Module Content Container -->
+        <div class="lg:col-span-9">
+          <div id="module-content-container" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <!-- Rendered dynamically based on active module -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 2: COMPLIANCE ESTIMATOR                                        -->
+    <!-- =================================================================== -->
+    <section id="view-estimator" class="view-section hidden animate-view">
+      <div class="mb-6">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 mb-2">
+          Interactive Workplace Checker
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight">
+          D.O. 252-25 Compliance Estimator
+        </h2>
+        <p class="text-slate-600 mt-1 max-w-3xl text-sm sm:text-base">
+          Select your establishment's workforce size, risk profile, and work arrangement to generate an instant baseline snapshot of Safety Officer staffing, committee setup, and program obligations.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Left Column: Input Controls -->
+        <div class="lg:col-span-5 space-y-5">
+          <!-- Step 1: Establishment Size -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+            <label class="block text-sm font-bold text-navy-900 mb-3">
+              1. Establishment Size (Total Workers)
+            </label>
+            <div class="grid grid-cols-2 gap-2.5" id="est-size-group">
+              <button type="button" data-size="micro" class="est-btn est-size-btn text-left p-3.5 rounded-xl border-2 transition-all">
+                <div class="font-bold text-sm">Micro</div>
+                <div class="text-xs opacity-80 mt-0.5">1 &ndash; 9 workers</div>
+              </button>
+              <button type="button" data-size="small" class="est-btn est-size-btn text-left p-3.5 rounded-xl border-2 transition-all">
+                <div class="font-bold text-sm">Small</div>
+                <div class="text-xs opacity-80 mt-0.5">10 &ndash; 99 workers</div>
+              </button>
+              <button type="button" data-size="medium" class="est-btn est-size-btn text-left p-3.5 rounded-xl border-2 transition-all">
+                <div class="font-bold text-sm">Medium</div>
+                <div class="text-xs opacity-80 mt-0.5">100 &ndash; 199 workers</div>
+              </button>
+              <button type="button" data-size="large" class="est-btn est-size-btn text-left p-3.5 rounded-xl border-2 transition-all">
+                <div class="font-bold text-sm">Large</div>
+                <div class="text-xs opacity-80 mt-0.5">200 &ndash; 500+ workers</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Industry / Risk Profile -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+            <label class="block text-sm font-bold text-navy-900 mb-3">
+              2. Industry / Risk Profile
+            </label>
+            <div class="space-y-2.5" id="est-risk-group">
+              <button type="button" data-risk="low" class="est-btn est-risk-btn w-full text-left p-3.5 rounded-xl border-2 transition-all flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-sm">General Low Risk</div>
+                  <div class="text-xs opacity-80">Offices, BPOs, retail, minimal physical hazards</div>
+                </div>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0"></span>
+              </button>
+              <button type="button" data-risk="medium" class="est-btn est-risk-btn w-full text-left p-3.5 rounded-xl border-2 transition-all flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-sm">General Medium Risk</div>
+                  <div class="text-xs opacity-80">Moderate hazards, cutting/lifting equipment, warehousing</div>
+                </div>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 flex-shrink-0"></span>
+              </button>
+              <button type="button" data-risk="high" class="est-btn est-risk-btn w-full text-left p-3.5 rounded-xl border-2 transition-all flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-sm">General High Risk</div>
+                  <div class="text-xs opacity-80">Fire/explosion, chemical contamination, mining, heavy mfg</div>
+                </div>
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500 flex-shrink-0"></span>
+              </button>
+              <button type="button" data-risk="construction" class="est-btn est-risk-btn w-full text-left p-3.5 rounded-xl border-2 transition-all flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-sm">Construction</div>
+                  <div class="text-xs opacity-80">Civil works, building projects, COSH-regulated sites</div>
+                </div>
+                <span class="w-2.5 h-2.5 rounded-full bg-orange-600 flex-shrink-0"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Work Arrangement -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+            <label class="block text-sm font-bold text-navy-900 mb-3">
+              3. Work Arrangement
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="est-work-group">
+              <button type="button" data-work="onsite" class="est-btn est-work-btn text-left p-3.5 rounded-xl border-2 transition-all">
+                <div class="font-bold text-sm">On-site Only</div>
+                <div class="text-xs opacity-80 mt-0.5">Physical workplace premises</div>
+              </button>
+              <button type="button" data-work="hybrid" class="est-btn est-work-btn text-left p-3.5 rounded-xl border-2 transition-all">
+                <div class="font-bold text-sm">Hybrid / Remote (WFH)</div>
+                <div class="text-xs opacity-80 mt-0.5">Includes telecommuting / home</div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Dynamic Compliance Snapshot -->
+        <div class="lg:col-span-7">
+          <div id="estimator-output" class="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden">
+            <!-- Populated dynamically by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 3: FLASHCARDS MODE                                             -->
+    <!-- =================================================================== -->
+    <section id="view-flashcards" class="view-section hidden animate-view">
+      <div class="max-w-3xl mx-auto">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+          <div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-navy-900 text-amber-400 mb-2">
+              Active Recall Deck
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight">
+              D.O. 252-25 Key Terms Flashcards
+            </h2>
+            <p class="text-sm text-slate-600 mt-1">
+              Click or tap the card to flip. Mark cards as "Got It" or "Needs Review" to track your mastery.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="fc-shuffle-btn" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:border-amber-400 text-slate-700 text-sm font-semibold shadow-sm transition-all">
+              <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+              </svg>
+              Shuffle
+            </button>
+          </div>
+        </div>
+
+        <!-- Mastery Stats & Filter Strip -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 mb-5 shadow-sm flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3 text-xs sm:text-sm font-semibold">
+            <span class="inline-flex items-center gap-1.5 text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Got It: <span id="fc-gotit-count">0</span>
+            </span>
+            <span class="inline-flex items-center gap-1.5 text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              Needs Review: <span id="fc-review-count">0</span>
+            </span>
+          </div>
+          <div class="text-xs font-bold text-slate-500">
+            Card <span id="fc-current-num" class="text-navy-900">1</span> of <span id="fc-total-num">12</span>
+          </div>
+        </div>
+
+        <!-- 3D Flip Card Stage -->
+        <div class="perspective-1000 w-full h-[320px] sm:h-[340px] cursor-pointer select-none mb-5" id="fc-stage" tabindex="0" role="button" aria-label="Flip flashcard">
+          <div id="fc-card-inner" class="relative w-full h-full transition-transform duration-500 transform-style-3d">
+            <!-- Front Face -->
+            <div class="absolute inset-0 backface-hidden bg-gradient-to-br from-navy-900 to-navy-800 text-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-700 flex flex-col justify-between">
+              <div class="flex items-center justify-between">
+                <span id="fc-category" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                  Category
+                </span>
+                <span id="fc-status-pill" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-700/80 text-slate-300">
+                  Unmarked
+                </span>
+              </div>
+              <div class="text-center my-auto px-2">
+                <p class="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">Term / Concept</p>
+                <h3 id="fc-front-text" class="text-2xl sm:text-3xl font-extrabold text-white leading-snug">
+                  Loading...
+                </h3>
+              </div>
+              <div class="text-center text-xs text-slate-400 flex items-center justify-center gap-1.5">
+                <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+                Click or press Space to reveal answer
+              </div>
+            </div>
+
+            <!-- Back Face -->
+            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-white text-navy-900 rounded-3xl p-6 sm:p-10 shadow-xl border-2 border-amber-400 flex flex-col justify-between">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
+                  D.O. 252-25 Answer
+                </span>
+                <span id="fc-back-ref" class="text-xs font-semibold text-slate-500">
+                  Reference
+                </span>
+              </div>
+              <div class="my-auto overflow-y-auto px-1">
+                <p id="fc-back-text" class="text-base sm:text-lg font-medium text-slate-800 leading-relaxed text-center">
+                  Loading...
+                </p>
+              </div>
+              <div class="text-center text-xs text-slate-400">
+                Click card again to flip back
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mastery & Navigation Controls -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5 w-full sm:w-auto">
+            <button id="fc-prev-btn" type="button" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-800 font-semibold text-sm shadow-sm transition-all">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+              Previous
+            </button>
+            <button id="fc-next-btn" type="button" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-800 font-semibold text-sm shadow-sm transition-all">
+              Next
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2.5 w-full sm:w-auto">
+            <button id="fc-review-btn" type="button" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-800 font-semibold text-sm transition-all">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+              Needs Review
+            </button>
+            <button id="fc-gotit-btn" type="button" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm shadow-sm transition-all">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              Got It!
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 4: KNOWLEDGE QUIZ                                              -->
+    <!-- =================================================================== -->
+    <section id="view-quiz" class="view-section hidden animate-view">
+      <div class="max-w-3xl mx-auto">
+        <div id="quiz-container" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <!-- Dynamically rendered quiz question or result card -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- FOOTER                                                                -->
+  <!-- ===================================================================== -->
+  <footer class="mt-auto border-t border-slate-200 bg-white py-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+      <p>
+        <strong>D.O. 252-25 OSH Learning Hub</strong> &mdash; Educational reference for DOLE Department Order No. 252, Series of 2025 (Revised IRR of R.A. 11058).
+      </p>
+      <p>
+        For formal filings, consult official DOLE issuances and Annexes A&ndash;E.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION JAVASCRIPT                                                -->
+  <!-- ===================================================================== -->
+  <script>
+    /**
+     * D.O. 252-25 OSH Learning Hub
+     * Self-contained interactive educational application covering
+     * DOLE Department Order No. 252, Series of 2025 (Revised IRR of R.A. 11058).
+     */
+
+    // =========================================================================
+    // 1. PERSISTENT STATE MANAGEMENT (localStorage with safe try/catch)
+    // =========================================================================
+    const STORAGE_KEY = 'do252_osh_hub_state_v1';
+
+    const defaultState = {
+      activeTab: 'modules',
+      activeModule: 1,
+      completedModules: [],     // e.g., [1, 2]
+      quizCompleted: false,
+      quizBestScore: null,
+      flashcardMastery: {},     // { [id]: 'gotit' | 'review' }
+      employerChecklist: {},    // { [idx]: boolean }
+      estimator: {
+        size: 'small',
+        risk: 'medium',
+        work: 'hybrid'
+      }
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return structuredClone(defaultState);
+        const parsed = JSON.parse(raw);
+        return {
+          ...structuredClone(defaultState),
+          ...parsed,
+          estimator: { ...defaultState.estimator, ...(parsed.estimator || {}) }
+        };
+      } catch (err) {
+        console.warn('Could not load saved state:', err);
+        return structuredClone(defaultState);
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (err) {
+        console.warn('Could not persist state:', err);
+      }
+    }
+
+    let appState = loadState();
+
+    // =========================================================================
+    // 2. TOAST NOTIFICATION HELPER
+    // =========================================================================
+    function showToast(message, type = 'emerald') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const colorClasses = type === 'amber'
+        ? 'bg-navy-900 text-amber-300 border-amber-500/50'
+        : 'bg-navy-900 text-emerald-300 border-emerald-500/50';
+
+      toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl border shadow-lg text-sm font-semibold transition-all duration-300 translate-y-2 opacity-0 ${colorClasses}`;
+      toast.innerHTML = `
+        <span class="w-2 h-2 rounded-full ${type === 'amber' ? 'bg-amber-400' : 'bg-emerald-400'}"></span>
+        <span>${message}</span>
+      `;
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 2600);
+    }
+
+    // =========================================================================
+    // 3. DATA DEFINITIONS (MODULES, FLASHCARDS, QUIZ)
+    // =========================================================================
+
+    const MODULES_META = [
+      { id: 1, short: 'Module 1', title: 'Overview & What Changed', subtitle: 'D.O. 252-25 vs. D.O. 198-18' },
+      { id: 2, short: 'Module 2', title: "Workers' Rights & Employer Duties", subtitle: '4 Core Rights, UHC & Welfare' },
+      { id: 3, short: 'Module 3', title: 'Workplace Risk & Safety Officers', subtitle: 'Classifications & SO1–SO4 Ladder' },
+      { id: 4, short: 'Module 4', title: 'Enforcement, WSO & Penalties', subtitle: 'Work Stoppage, 24-Hr Rule & Fines' }
+    ];
+
+    const COMPARISON_DATA = [
+      {
+        area: 'Remote & Hybrid Work',
+        oldRule: 'Focused primarily on traditional on-site physical establishments with limited WFH guidance.',
+        newRule: 'Explicitly covers remote/WFH arrangements, telecommuting, alternative workplaces, and homes converted into workplaces.'
+      },
+      {
+        area: 'Psychosocial & Climate Hazards',
+        oldRule: 'Emphasized physical, chemical, biological, and ergonomic hazards with minimal mental health/climate provisions.',
+        newRule: 'Mandates integration of psychosocial hazards (stress, bullying, harassment) and climate hazards (extreme heat) into the living OSH Program.'
+      },
+      {
+        area: 'Safety Officer Specialized Training',
+        oldRule: 'Standard BOSH/COSH baseline tiers; less explicit micro-enterprise support and specialized refresher pathways.',
+        newRule: 'Clarifies 4-hour BOSH baseline for micro low/med risk (with free DOLE/LGU first aid & safety training) and structured SO1–SO4 specialized hours.'
+      },
+      {
+        area: 'Work Stoppage Order (WSO) Clarity',
+        oldRule: 'Procedural gaps sometimes led to confusion over immediate stoppage authority and DOLE validation timelines.',
+        newRule: 'Clear workflow: Safety Officer orders immediate stoppage upon imminent danger, notifies DOLE within 24 hours, DOLE validates, and workers cannot be forced back.'
+      },
+      {
+        area: 'Administrative Fines',
+        oldRule: 'Flat-style daily penalty tables up to ₱100,000/day often debated during enforcement.',
+        newRule: 'Retains the statutory ceiling of up to ₱100,000/day (RA 11058 Sec. 28 / DO 252-25 Sec. 42) applied via a graduated/progressive schedule—steeper for repeat & willful violations.'
+      }
+    ];
+
+    const WORKERS_RIGHTS = [
+      {
+        id: 'know',
+        title: '1. Right to Know',
+        badge: 'Mandatory Orientation',
+        summary: 'Workers must be informed of all workplace hazards and receive free, paid OSH orientation before deployment.',
+        details: [
+          'Employers must communicate workplace hazards, safety rules, and emergency procedures in a language or dialect understood by workers.',
+          'Mandatory 8-hour OSH orientation must be provided at NO cost to the worker and considered paid work time prior to deployment.',
+          'Covers physical, chemical, biological, ergonomic, psychosocial, and climate-related hazards.'
+        ]
+      },
+      {
+        id: 'refuse',
+        title: '2. Right to Refuse Unsafe Work',
+        badge: 'Zero Reprisal',
+        summary: 'Workers may refuse to work without threat of retaliation when imminent danger exists or a WSO is active.',
+        details: [
+          'Applies whenever an imminent danger situation is determined by the Safety Officer or validated by DOLE.',
+          'Employers cannot discipline, demote, terminate, or withhold lawful protection from workers exercising this right.',
+          'Workers cannot be forced to resume operations until DOLE lifts the Work Stoppage Order and hazards are abated.'
+        ]
+      },
+      {
+        id: 'report',
+        title: '3. Right to Report Accidents & Dangerous Occurrences',
+        badge: 'DOLE Hotline 1349',
+        summary: 'Workers have the right to report accidents, illnesses, and dangerous occurrences to the employer or directly to DOLE.',
+        details: [
+          'Reports can be filed with the employer, Safety Officer, OSH Committee, or directly to the DOLE Regional/Field Office.',
+          'Workers may call DOLE Hotline 1349 for urgent safety complaints or imminent danger alerts.',
+          'Protected from any form of employer retaliation for good-faith safety reporting.'
+        ]
+      },
+      {
+        id: 'ppe',
+        title: '4. Right to Personal Protective Equipment (PPE)',
+        badge: 'Free of Charge',
+        summary: 'Employers must provide appropriate, DOLE/standard-approved PPE completely free of charge.',
+        details: [
+          'All required PPE (helmets, harnesses, respirators, insulated gloves, safety shoes, etc.) must be supplied free of cost—never deducted from wages.',
+          'PPE must be properly fitted, maintained, and replaced when damaged or expired.',
+          'Workers must receive training on proper wearing, care, and limitations of assigned PPE.'
+        ]
+      }
+    ];
+
+    const EMPLOYER_DUTIES = [
+      {
+        title: 'Hazard-Free Work Environment (On-site & Remote)',
+        desc: 'Maintain safe conditions across physical sites, alternative workplaces, and remote/WFH setups.'
+      },
+      {
+        title: 'Living OSH Program',
+        desc: 'Establish and periodically update a written OSH Program incorporating psychosocial hazards (stress, bullying, harassment) and climate hazards (extreme heat).'
+      },
+      {
+        title: 'Accessible Safety Signages',
+        desc: 'Install clear, visible safety warnings and signages in a language or dialect understood by all workers.'
+      },
+      {
+        title: 'Free Medical Exams & UHC Integration',
+        desc: 'Provide free pre-employment/periodic medical exams and facilitate Universal Health Care (UHC) primary care facility registration and referral.'
+      },
+      {
+        title: 'Inclusive Welfare Facilities',
+        desc: 'Provide safe drinking water, sanitary/washing facilities, and accessible welfare spaces for elderly workers, PWDs, and vulnerable groups.'
+      }
+    ];
+
+    const SO_TIERS = [
+      {
+        id: 'micro',
+        code: 'Micro Baseline',
+        title: 'Safety Officer (4-Hr BOSH)',
+        hours: '4-Hour BOSH Training',
+        experience: 'No prior OSH experience required',
+        scope: 'Micro establishments (1–9 workers) in Low or Medium Risk industries.',
+        highlight: 'DOLE and LGUs offer free basic first aid and safety training programs to help micro enterprises comply.'
+      },
+      {
+        id: 'so1',
+        code: 'SO1',
+        title: 'Safety Officer 1',
+        hours: '8-Hour BOSH Training',
+        experience: 'Entry-level workplace designation',
+        scope: 'Micro High-Risk establishments (1–9 workers) or Small Low-Risk establishments (10–99 workers).',
+        highlight: 'Covers foundational hazard identification, basic emergency response, and OSH reporting.'
+      },
+      {
+        id: 'so2',
+        code: 'SO2',
+        title: 'Safety Officer 2',
+        hours: '40-Hour BOSH (or COSH for Construction)',
+        experience: 'Or relevant university-based OSH education',
+        scope: 'Small Medium/High Risk, Medium Low/Med Risk, Construction sites (1–99 workers), and similar profiles.',
+        highlight: 'Core operational safety officer capable of leading OSH inspections, incident investigations, and committee support.'
+      },
+      {
+        id: 'so3',
+        code: 'SO3',
+        title: 'Safety Officer 3',
+        hours: 'SO2 + ≥48 Hours Advanced/Specialized OSH',
+        experience: 'At least 2 years of OSH experience',
+        scope: 'Medium High-Risk, Large Medium/High-Risk, and larger Construction projects (100+ workers).',
+        highlight: 'Specialized training includes HIRADC (Hazard Identification, Risk Assessment & Determining Controls), Loss Control, or Industrial Hygiene.'
+      },
+      {
+        id: 'so4',
+        code: 'SO4',
+        title: 'Safety Officer 4 (OSH Consultant)',
+        hours: 'SO2 + 80 Hours Advanced OSH Training',
+        experience: 'At least 320 hours OSH practice + DOLE Accreditation',
+        scope: 'Large High-Risk establishments and major Construction projects (200–500+ workers).',
+        highlight: 'DOLE-accredited OSH Consultant qualified to audit enterprise-wide systems and advise executive management.'
+      }
+    ];
+
+    const FLASHCARDS = [
+      {
+        id: 1,
+        category: 'Legal Basis',
+        ref: 'D.O. 252-25 Effectivity',
+        front: 'Effective Date of D.O. 252-25',
+        back: 'Signed on April 28, 2025, and took effect on May 16, 2025. It consists of Sections 1–50 and Annexes A–E.'
+      },
+      {
+        id: 2,
+        category: 'Legal Basis',
+        ref: 'Repealing Clause',
+        front: 'Superseded Department Order',
+        back: 'D.O. 252-25 supersedes DOLE Department Order No. 198, Series of 2018, serving as the Revised IRR of Republic Act No. 11058.'
+      },
+      {
+        id: 3,
+        category: "Workers' Rights",
+        ref: 'R.A. 11058 & D.O. 252-25',
+        front: 'The 4 Core Workers\' Rights',
+        back: '1) Right to Know (incl. 8-hr paid orientation), 2) Right to Refuse Unsafe Work, 3) Right to Report Accidents & Dangerous Occurrences, and 4) Right to Free Approved PPE.'
+      },
+      {
+        id: 4,
+        category: 'Safety Officers',
+        ref: 'SO Qualification Ladder',
+        front: 'SO1 vs. SO2 Training Requirements',
+        back: 'SO1 requires 8-hour BOSH training (e.g., micro high-risk or small low-risk). SO2 requires 40-hour BOSH (or COSH for construction) or relevant university-based OSH education.'
+      },
+      {
+        id: 5,
+        category: 'Safety Officers',
+        ref: 'Advanced SO Tiers',
+        front: 'SO3 vs. SO4 Requirements',
+        back: 'SO3 = SO2 + ≥48 hrs advanced/specialized OSH training (e.g., HIRADC, Loss Control) + ≥2 yrs OSH experience. SO4 = SO2 + 80 hrs advanced training + ≥320 hrs OSH practice + DOLE accreditation as OSH Consultant.'
+      },
+      {
+        id: 6,
+        category: 'Enforcement',
+        ref: 'Hazard Definitions',
+        front: 'Imminent Danger',
+        back: 'A situation caused by a condition or practice in any place of employment that could reasonably be expected to cause death or serious physical harm before normal abatement.'
+      },
+      {
+        id: 7,
+        category: 'Enforcement',
+        ref: 'WSO Protocol',
+        front: 'Work Stoppage Order (WSO)',
+        back: 'An immediate halt to hazardous work triggered by imminent danger. The Safety Officer orders stoppage, notifies DOLE within 24 hours for validation, and workers cannot be forced back while the WSO is active.'
+      },
+      {
+        id: 8,
+        category: 'Reporting',
+        ref: 'Mandatory Audit Trail',
+        front: '24-Hour Reporting Rule',
+        back: 'Employers must notify the DOLE Regional/Field Office within 24 hours of any workplace accident, disabling injury, imminent danger, or dangerous occurrence (in addition to WAIR, AEDR, and AMR filings).'
+      },
+      {
+        id: 9,
+        category: 'Expanded Coverage',
+        ref: 'Modern Workplaces',
+        front: 'Remote / WFH Coverage',
+        back: 'D.O. 252-25 explicitly extends OSH protection to remote/work-from-home arrangements, alternative workplaces, and homes converted into workplaces—alongside PEZA zones, GOCCs without original charters, and contractors.'
+      },
+      {
+        id: 10,
+        category: 'OSH Program',
+        ref: 'Emerging Hazards',
+        front: 'Psychosocial & Climate Hazards',
+        back: 'Employers must maintain a living OSH Program periodically updated to address psychosocial hazards (workplace stress, bullying, harassment) and climate hazards (such as extreme heat).'
+      },
+      {
+        id: 11,
+        category: 'Penalties',
+        ref: 'RA 11058 Sec. 28 / DO 252-25 Sec. 42',
+        front: '₱100,000/Day Ceiling & Progressive Fines',
+        back: 'The statutory maximum fine remains up to ₱100,000 per day of uncorrected violation, now enforced through a graduated/progressive schedule that imposes steeper fines for repeat offenses and willful non-compliance.'
+      },
+      {
+        id: 12,
+        category: 'Workers\' Support',
+        ref: 'DOLE Emergency Channel',
+        front: 'DOLE Hotline 1349',
+        back: 'The official 24/7 DOLE hotline where workers can report workplace accidents, dangerous occurrences, imminent dangers, or OSH violations without fear of reprisal.'
+      }
+    ];
+
+    const QUIZ_QUESTIONS = [
+      {
+        q: 'When did DOLE Department Order No. 252, Series of 2025 take effect, and which issuance did it supersede?',
+        options: [
+          'Effective January 1, 2025; superseded D.O. 183-17',
+          'Effective May 16, 2025; superseded D.O. 198, Series of 2018',
+          'Effective April 28, 2025; superseded D.O. 174-17',
+          'Effective June 1, 2025; superseded the Labor Code entirely'
+        ],
+        answer: 1,
+        explanation: 'D.O. 252-25 was signed on April 28, 2025, took effect on May 16, 2025, and superseded D.O. 198, Series of 2018 as the Revised IRR of R.A. 11058.'
+      },
+      {
+        q: 'Which of the following workplaces is now explicitly covered under D.O. 252-25?',
+        options: [
+          'Only manufacturing plants with 50 or more employees',
+          'Remote/WFH arrangements, homes converted into workplaces, PEZA enterprises, and GOCCs without original charters',
+          'Only government agencies with original charters',
+          'Only on-site construction firms operating in Metro Manila'
+        ],
+        answer: 1,
+        explanation: 'D.O. 252-25 broadens explicit coverage to private establishments, remote/WFH and alternative workplaces, homes converted into workplaces, PEZA/Ecozone firms, GOCCs without original charters, and contracting/subcontracting arrangements.'
+      },
+      {
+        q: 'Under the "Right to Know," what is required for newly hired workers before deployment?',
+        options: [
+          'A self-funded 40-hour BOSH course prior to signing a contract',
+          'A mandatory 8-hour paid OSH orientation provided at no cost to the worker',
+          'Only a printed safety handbook handed out after the first month',
+          'An optional 1-hour webinar taken during unpaid rest days'
+        ],
+        answer: 1,
+        explanation: 'Workers have the right to a mandatory 8-hour OSH orientation provided free of charge and treated as paid work time prior to deployment.'
+      },
+      {
+        q: 'A micro-sized coffee shop (6 workers, Low Risk) wants to comply with D.O. 252-25 Safety Officer rules. What is their baseline requirement?',
+        options: [
+          '1 DOLE-accredited SO4 consultant full-time',
+          '1 Safety Officer with 4-hour BOSH training (with free DOLE/LGU first aid & safety training available)',
+          '2 Safety Officers with 40-hour COSH training',
+          'Micro establishments are completely exempt from having any safety officer'
+        ],
+        answer: 1,
+        explanation: 'Micro Low/Medium Risk establishments (1–9 workers) have a baseline requirement of a Safety Officer with 4-hour BOSH training, supported by free DOLE/LGU first aid and safety training.'
+      },
+      {
+        q: 'What distinguishes a Safety Officer 3 (SO3) from a Safety Officer 2 (SO2)?',
+        options: [
+          'SO3 only needs an 8-hour BOSH certificate',
+          'SO3 requires SO2 plus at least 48 hours of advanced/specialized OSH training (e.g., HIRADC, Loss Control) and at least 2 years of OSH experience',
+          'SO3 requires 80 hours of advanced training and 320 hours of practice as a DOLE-accredited consultant',
+          'There is no difference; SO2 and SO3 have identical qualifications'
+        ],
+        answer: 1,
+        explanation: 'SO3 builds on SO2 with at least 48 hours of advanced/specialized OSH training and at least 2 years of OSH experience. (80 hours + 320 practice hours + DOLE accreditation describes SO4.)'
+      },
+      {
+        q: 'During a warehouse shift, a structural rack begins buckling—creating an imminent danger. What is the proper Work Stoppage Order (WSO) sequence?',
+        options: [
+          'Wait for the weekly OSH Committee meeting before stopping work',
+          'Safety Officer orders immediate work stoppage, notifies DOLE within 24 hours for validation, and workers cannot be forced back while WSO is active',
+          'Ask workers to sign a waiver and finish the shift before calling DOLE',
+          'Only the company CEO may halt work after 72 hours of review'
+        ],
+        answer: 1,
+        explanation: 'Upon detecting imminent danger, the Safety Officer immediately orders a work stoppage, notifies DOLE within 24 hours for validation, and workers are legally protected from being forced back while the WSO remains active.'
+      },
+      {
+        q: 'A principal company hires a maintenance contractor who deploys 7 workers to the site. Under Section 35 of D.O. 252-25, how are those deployed workers covered if the contractor has 9 or fewer deployed workers?',
+        options: [
+          'They have no OSH coverage because they are outsourced',
+          'The principal covers the contractor\'s deployed workers (while contractors must generally assign their own safety officers)',
+          'The workers must hire their own external SO4 consultant',
+          'DOLE assigns a government inspector to stay on-site daily'
+        ],
+        answer: 1,
+        explanation: 'Safety officers must be present on all workdays, and contractors must assign safety officers—with the principal covering the contractor\'s deployed workers if 9 or fewer under Sec. 35.'
+      },
+      {
+        q: 'Which new hazard categories must employers integrate into their periodically updated "living OSH Program" under D.O. 252-25?',
+        options: [
+          'Only electrical and fire hazards',
+          'Psychosocial hazards (stress, bullying, harassment) and climate hazards (such as extreme heat)',
+          'Only international maritime hazards',
+          'No new hazard categories were added compared to D.O. 198-18'
+        ],
+        answer: 1,
+        explanation: 'D.O. 252-25 explicitly requires employers to maintain a living OSH Program that addresses psychosocial hazards (stress, bullying, harassment) and climate-related hazards like extreme heat.'
+      },
+      {
+        q: 'Within how many hours must an employer report a workplace accident, disabling injury, or dangerous occurrence to DOLE?',
+        options: [
+          'Within 7 working days',
+          'Within 24 hours',
+          'At the end of the calendar quarter',
+          'Within 30 days via the Annual Medical Report only'
+        ],
+        answer: 1,
+        explanation: 'D.O. 252-25 requires 24-hour reporting to DOLE for accidents, disabling injuries, imminent dangers, and dangerous occurrences, alongside regular WAIR, AEDR, and AMR filings.'
+      },
+      {
+        q: 'How are administrative fines structured under R.A. 11058 Sec. 28 and D.O. 252-25 Sec. 42?',
+        options: [
+          'A one-time flat fine of ₱5,000 regardless of severity',
+          'Up to ₱100,000 per day of uncorrected violation, applied via a progressive/graduated schedule with higher penalties for repeat and willful violations',
+          'Fines were abolished in favor of verbal warnings',
+          'Up to ₱10,000 per year maximum'
+        ],
+        answer: 1,
+        explanation: 'The statutory ceiling remains up to ₱100,000 per day of uncorrected violation, applied through a graduated/progressive schedule that escalates for repeat offenses and willful non-compliance.'
+      }
+    ];
+
+    // =========================================================================
+    // 4. GLOBAL HEADER & PROGRESS UPDATER
+    // =========================================================================
+    function updateGlobalProgress() {
+      const completedMods = appState.completedModules.length;
+      const quizDone = appState.quizCompleted ? 1 : 0;
+      const totalMilestones = 5; // 4 modules + 1 quiz
+      const achieved = completedMods + quizDone;
+      const percent = Math.round((achieved / totalMilestones) * 100);
+
+      document.getElementById('overall-progress-label').textContent = `${percent}% (${achieved}/${totalMilestones})`;
+      document.getElementById('overall-progress-bar').style.width = `${percent}%`;
+
+      // Update nav badges
+      const modBadge = document.getElementById('nav-modules-badge');
+      modBadge.textContent = `${completedMods}/4`;
+      modBadge.className = completedMods === 4
+        ? 'text-[11px] px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold'
+        : 'text-[11px] px-1.5 py-0.5 rounded-full bg-slate-700 text-slate-200';
+
+      const quizBadge = document.getElementById('nav-quiz-badge');
+      if (appState.quizCompleted && appState.quizBestScore !== null) {
+        quizBadge.textContent = `${appState.quizBestScore}/10`;
+        quizBadge.className = 'text-[11px] px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold';
+      } else {
+        quizBadge.textContent = '10 Qs';
+        quizBadge.className = 'text-[11px] px-1.5 py-0.5 rounded-full bg-slate-700 text-slate-200';
+      }
+
+      document.getElementById('sidebar-module-count').textContent = `${completedMods} of 4`;
+    }
+
+    // =========================================================================
+    // 5. TAB NAVIGATION
+    // =========================================================================
+    function switchTab(tabName) {
+      appState.activeTab = tabName;
+      saveState();
+
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+      const activeSection = document.getElementById(`view-${tabName}`);
+      if (activeSection) {
+        activeSection.classList.remove('hidden');
+      }
+
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        const isTarget = btn.dataset.tab === tabName;
+        if (isTarget) {
+          btn.classList.add('bg-amber-500', 'text-navy-900', 'shadow-sm');
+          btn.classList.remove('text-slate-300', 'hover:bg-slate-700/70', 'hover:text-white');
+        } else {
+          btn.classList.remove('bg-amber-500', 'text-navy-900', 'shadow-sm');
+          btn.classList.add('text-slate-300', 'hover:bg-slate-700/70', 'hover:text-white');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================================
+    // 6. VIEW 1: LEARN MODULES RENDERER
+    // =========================================================================
+    let activeSOTier = 'so2';
+    let expandedRights = { know: true };
+
+    function renderModuleSidebar() {
+      const container = document.getElementById('module-sidebar-list');
+      container.innerHTML = MODULES_META.map(m => {
+        const isActive = appState.activeModule === m.id;
+        const isDone = appState.completedModules.includes(m.id);
+        return `
+          <button
+            type="button"
+            onclick="selectModule(${m.id})"
+            class="w-full text-left p-3 rounded-xl border transition-all flex items-start gap-3 ${
+              isActive
+                ? 'bg-navy-900 text-white border-navy-900 shadow-md'
+                : 'bg-slate-50/70 hover:bg-slate-100 text-slate-800 border-slate-200'
+            }"
+          >
+            <div class="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+              isDone
+                ? 'bg-emerald-500 text-white'
+                : isActive
+                  ? 'bg-amber-500 text-navy-900'
+                  : 'bg-slate-200 text-slate-600'
+            }">
+              ${isDone
+                ? '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>'
+                : m.id}
+            </div>
+            <div class="min-w-0">
+              <div class="text-[11px] font-bold uppercase tracking-wider ${isActive ? 'text-amber-400' : 'text-slate-500'}">
+                ${m.short}
+              </div>
+              <div class="text-sm font-bold leading-snug truncate">${m.title}</div>
+              <div class="text-xs ${isActive ? 'text-slate-300' : 'text-slate-500'} truncate mt-0.5">${m.subtitle}</div>
+            </div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectModule(id) {
+      appState.activeModule = id;
+      saveState();
+      renderModuleSidebar();
+      renderActiveModule();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleModuleComplete(id) {
+      const idx = appState.completedModules.indexOf(id);
+      if (idx === -1) {
+        appState.completedModules.push(id);
+        showToast(`Module ${id} marked as complete!`, 'emerald');
+      } else {
+        appState.completedModules.splice(idx, 1);
+        showToast(`Module ${id} marked as incomplete.`, 'amber');
+      }
+      saveState();
+      updateGlobalProgress();
+      renderModuleSidebar();
+      renderActiveModule();
+    }
+
+    function toggleRightCard(rightId) {
+      expandedRights[rightId] = !expandedRights[rightId];
+      renderActiveModule();
+    }
+
+    function toggleEmployerDuty(idx) {
+      appState.employerChecklist[idx] = !appState.employerChecklist[idx];
+      saveState();
+      renderActiveModule();
+    }
+
+    function selectSOTier(tierId) {
+      activeSOTier = tierId;
+      renderActiveModule();
+    }
+
+    function renderActiveModule() {
+      const modId = appState.activeModule;
+      const isDone = appState.completedModules.includes(modId);
+      const container = document.getElementById('module-content-container');
+
+      let bodyHtml = '';
+
+      if (modId === 1) {
+        bodyHtml = `
+          <!-- Module 1 Hero Header -->
+          <div class="bg-gradient-to-r from-navy-900 to-navy-800 text-white p-6 sm:p-8">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-navy-900">Module 1 of 4</span>
+              <span class="text-xs text-slate-300 font-medium">Foundations &amp; Regulatory Updates</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Overview &amp; What Changed</h2>
+            <p class="text-slate-300 text-sm sm:text-base mt-1.5 max-w-2xl">
+              Understand how DOLE Department Order No. 252, Series of 2025 modernizes Occupational Safety and Health (OSH) compliance under Republic Act No. 11058.
+            </p>
+          </div>
+
+          <div class="p-6 sm:p-8 space-y-8">
+            <!-- Key Facts Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                <div class="text-xs font-semibold text-slate-500 uppercase">Date Signed</div>
+                <div class="text-lg font-extrabold text-navy-900 mt-1">Apr 28, 2025</div>
+              </div>
+              <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                <div class="text-xs font-semibold text-amber-700 uppercase">Effectivity Date</div>
+                <div class="text-lg font-extrabold text-amber-900 mt-1">May 16, 2025</div>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                <div class="text-xs font-semibold text-slate-500 uppercase">Supersedes</div>
+                <div class="text-lg font-extrabold text-navy-900 mt-1">D.O. 198-18</div>
+              </div>
+              <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                <div class="text-xs font-semibold text-emerald-700 uppercase">Structure</div>
+                <div class="text-lg font-extrabold text-emerald-900 mt-1">Sec. 1&ndash;50 &amp; Annex A&ndash;E</div>
+              </div>
+            </div>
+
+            <!-- Expanded Coverage Cards -->
+            <div>
+              <h3 class="text-lg font-extrabold text-navy-900 mb-1">Expanded Workplace Coverage</h3>
+              <p class="text-sm text-slate-600 mb-4">D.O. 252-25 leaves no ambiguity about who is protected across modern Philippine work arrangements:</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                ${[
+                  { title: 'Private Sector Establishments', desc: 'All private workplaces across industries, regardless of size (micro to large).' },
+                  { title: 'Remote & WFH / Alternative Sites', desc: 'Telecommuting employees, hybrid teams, and off-site alternative workplaces.' },
+                  { title: 'Homes Converted to Workplaces', desc: 'Residential premises formally utilized for business or livelihood operations.' },
+                  { title: 'PEZA & Special Economic Zones', desc: 'Enterprises operating inside PEZA and other special economic zones.' },
+                  { title: 'GOCCs Without Original Charters', desc: 'Government-Owned and Controlled Corporations governed by the Labor Code.' },
+                  { title: 'Contracting & Subcontracting', desc: 'Principals, contractors, and subcontractors with shared safety accountability.' }
+                ].map(item => `
+                  <div class="p-4 rounded-xl border border-slate-200 bg-white hover:border-amber-400 hover:shadow-sm transition-all">
+                    <div class="flex items-center gap-2 mb-1.5">
+                      <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                      <h4 class="font-bold text-sm text-navy-900">${item.title}</h4>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed">${item.desc}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Side-by-Side Comparison Table -->
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <div>
+                  <h3 class="text-lg font-extrabold text-navy-900">D.O. 198-18 (Old) vs. D.O. 252-25 (Current)</h3>
+                  <p class="text-sm text-slate-600">Key regulatory shifts every employer, HR lead, and safety officer must know.</p>
+                </div>
+              </div>
+
+              <div class="overflow-x-auto rounded-xl border border-slate-200">
+                <table class="w-full text-left border-collapse min-w-[600px]">
+                  <thead>
+                    <tr class="bg-navy-900 text-white text-xs uppercase tracking-wider">
+                      <th class="p-3.5 font-bold w-1/5">Key Area</th>
+                      <th class="p-3.5 font-bold w-2/5 bg-slate-800/80 text-slate-300">D.O. 198-18 (Old)</th>
+                      <th class="p-3.5 font-bold w-2/5 bg-emerald-900/40 text-emerald-300">D.O. 252-25 (Current)</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-200 text-sm">
+                    ${COMPARISON_DATA.map(row => `
+                      <tr class="hover:bg-slate-50/80 transition-colors">
+                        <td class="p-3.5 font-bold text-navy-900 align-top">${row.area}</td>
+                        <td class="p-3.5 text-slate-600 align-top bg-slate-50/40">${row.oldRule}</td>
+                        <td class="p-3.5 text-slate-800 font-medium align-top bg-emerald-50/30 border-l border-emerald-100">${row.newRule}</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (modId === 2) {
+        bodyHtml = `
+          <!-- Module 2 Hero Header -->
+          <div class="bg-gradient-to-r from-navy-900 to-navy-800 text-white p-6 sm:p-8">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-navy-900">Module 2 of 4</span>
+              <span class="text-xs text-slate-300 font-medium">Rights, Responsibilities &amp; Well-Being</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Workers' Rights, Employer Duties &amp; Welfare</h2>
+            <p class="text-slate-300 text-sm sm:text-base mt-1.5 max-w-2xl">
+              Explore the four non-negotiable rights of Filipino workers alongside expanded employer obligations for health, UHC integration, and inclusive welfare facilities.
+            </p>
+          </div>
+
+          <div class="p-6 sm:p-8 space-y-8">
+            <!-- 4 Core Workers' Rights Expandable Cards -->
+            <div>
+              <h3 class="text-lg font-extrabold text-navy-900 mb-1">The 4 Core Workers' Rights</h3>
+              <p class="text-sm text-slate-600 mb-4">Click each card to inspect the legal protections under R.A. 11058 and D.O. 252-25.</p>
+              <div class="space-y-3">
+                ${WORKERS_RIGHTS.map(r => {
+                  const isOpen = !!expandedRights[r.id];
+                  return `
+                    <div class="rounded-xl border ${isOpen ? 'border-amber-400 bg-amber-50/20 shadow-sm' : 'border-slate-200 bg-white'} overflow-hidden transition-all">
+                      <button
+                        type="button"
+                        onclick="toggleRightCard('${r.id}')"
+                        class="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 hover:bg-slate-50/70 transition-colors"
+                      >
+                        <div>
+                          <div class="flex flex-wrap items-center gap-2">
+                            <h4 class="font-extrabold text-base text-navy-900">${r.title}</h4>
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-navy-900 text-amber-400">${r.badge}</span>
+                          </div>
+                          <p class="text-sm text-slate-600 mt-1">${r.summary}</p>
+                        </div>
+                        <svg class="w-5 h-5 text-slate-500 flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 text-amber-600' : ''}" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                      </button>
+                      ${isOpen ? `
+                        <div class="px-4 sm:px-5 pb-5 pt-1 border-t border-amber-200/60">
+                          <ul class="space-y-2 mt-2">
+                            ${r.details.map(d => `
+                              <li class="flex items-start gap-2.5 text-sm text-slate-700">
+                                <svg class="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                                <span>${d}</span>
+                              </li>
+                            `).join('')}
+                          </ul>
+                        </div>
+                      ` : ''}
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Employer Duties Interactive Checklist -->
+            <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5 sm:p-6">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <div>
+                  <h3 class="text-lg font-extrabold text-navy-900">Employer Duties &amp; Inclusive Welfare Checklist</h3>
+                  <p class="text-sm text-slate-600">Check off each mandatory duty as you review your workplace readiness.</p>
+                </div>
+                <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800">
+                  ${Object.values(appState.employerChecklist).filter(Boolean).length}/${EMPLOYER_DUTIES.length} Reviewed
+                </span>
+              </div>
+
+              <div class="space-y-2.5">
+                ${EMPLOYER_DUTIES.map((duty, idx) => {
+                  const checked = !!appState.employerChecklist[idx];
+                  return `
+                    <label class="flex items-start gap-3.5 p-3.5 rounded-xl border cursor-pointer transition-all ${
+                      checked ? 'bg-emerald-50/70 border-emerald-300' : 'bg-white border-slate-200 hover:border-slate-300'
+                    }">
+                      <input
+                        type="checkbox"
+                        ${checked ? 'checked' : ''}
+                        onchange="toggleEmployerDuty(${idx})"
+                        class="mt-1 w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                      />
+                      <div>
+                        <div class="font-bold text-sm ${checked ? 'text-emerald-900 line-through decoration-emerald-400' : 'text-navy-900'}">${duty.title}</div>
+                        <div class="text-xs text-slate-600 mt-0.5 leading-relaxed">${duty.desc}</div>
+                      </div>
+                    </label>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (modId === 3) {
+        const selectedSO = SO_TIERS.find(t => t.id === activeSOTier) || SO_TIERS[2];
+        bodyHtml = `
+          <!-- Module 3 Hero Header -->
+          <div class="bg-gradient-to-r from-navy-900 to-navy-800 text-white p-6 sm:p-8">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-navy-900">Module 3 of 4</span>
+              <span class="text-xs text-slate-300 font-medium">Staffing &amp; Qualification Tiers</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Workplace Classification &amp; Safety Officers (SO1&ndash;SO4)</h2>
+            <p class="text-slate-300 text-sm sm:text-base mt-1.5 max-w-2xl">
+              Learn how establishment size and risk level determine your required Safety Officer tier and contractor coverage duties.
+            </p>
+          </div>
+
+          <div class="p-6 sm:p-8 space-y-8">
+            <!-- Size & Risk Classifications -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <!-- Size -->
+              <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+                <h3 class="text-sm font-extrabold uppercase tracking-wider text-navy-900 mb-3">Establishment Size</h3>
+                <div class="grid grid-cols-2 gap-2.5">
+                  <div class="bg-white p-3 rounded-xl border border-slate-200">
+                    <div class="text-xs font-bold text-amber-600">Micro</div>
+                    <div class="text-base font-extrabold text-navy-900">1 &ndash; 9</div>
+                    <div class="text-[11px] text-slate-500">workers</div>
+                  </div>
+                  <div class="bg-white p-3 rounded-xl border border-slate-200">
+                    <div class="text-xs font-bold text-amber-600">Small</div>
+                    <div class="text-base font-extrabold text-navy-900">10 &ndash; 99</div>
+                    <div class="text-[11px] text-slate-500">workers</div>
+                  </div>
+                  <div class="bg-white p-3 rounded-xl border border-slate-200">
+                    <div class="text-xs font-bold text-amber-600">Medium</div>
+                    <div class="text-base font-extrabold text-navy-900">100 &ndash; 199</div>
+                    <div class="text-[11px] text-slate-500">workers</div>
+                  </div>
+                  <div class="bg-white p-3 rounded-xl border border-slate-200">
+                    <div class="text-xs font-bold text-amber-600">Large</div>
+                    <div class="text-base font-extrabold text-navy-900">200+</div>
+                    <div class="text-[11px] text-slate-500">workers</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Risk -->
+              <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+                <h3 class="text-sm font-extrabold uppercase tracking-wider text-navy-900 mb-3">Risk Classifications</h3>
+                <div class="space-y-2.5">
+                  <div class="bg-white p-3 rounded-xl border-l-4 border-emerald-500 border-y border-r border-slate-200">
+                    <div class="font-bold text-sm text-navy-900">Low Risk</div>
+                    <div class="text-xs text-slate-600">Low level of danger; e.g., general offices, BPOs, retail.</div>
+                  </div>
+                  <div class="bg-white p-3 rounded-xl border-l-4 border-amber-500 border-y border-r border-slate-200">
+                    <div class="font-bold text-sm text-navy-900">Medium Risk</div>
+                    <div class="text-xs text-slate-600">Moderate exposure; e.g., cutting/lifting equipment, warehousing.</div>
+                  </div>
+                  <div class="bg-white p-3 rounded-xl border-l-4 border-rose-500 border-y border-r border-slate-200">
+                    <div class="font-bold text-sm text-navy-900">High Risk</div>
+                    <div class="text-xs text-slate-600">Severe danger; e.g., explosions, fire, chemical contamination, construction, mining.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive SO1 to SO4 Ladder -->
+            <div>
+              <h3 class="text-lg font-extrabold text-navy-900 mb-1">Interactive Safety Officer Ladder (Micro &ndash; SO4)</h3>
+              <p class="text-sm text-slate-600 mb-4">Select any tier below to view training hours, experience requirements, and typical workplace scope.</p>
+
+              <!-- Ladder Selector Tabs -->
+              <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-4">
+                ${SO_TIERS.map(t => {
+                  const isSel = t.id === activeSOTier;
+                  return `
+                    <button
+                      type="button"
+                      onclick="selectSOTier('${t.id}')"
+                      class="p-3 rounded-xl border-2 text-center transition-all ${
+                        isSel
+                          ? 'bg-navy-900 text-white border-amber-500 shadow-md'
+                          : 'bg-white text-slate-700 border-slate-200 hover:border-amber-300'
+                      }"
+                    >
+                      <div class="text-xs font-extrabold uppercase ${isSel ? 'text-amber-400' : 'text-slate-500'}">${t.code}</div>
+                      <div class="text-[11px] mt-0.5 truncate ${isSel ? 'text-slate-200' : 'text-slate-500'}">${t.hours.split(' ')[0]} ${t.hours.split(' ')[1] || ''}</div>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              <!-- Selected Tier Detail Card -->
+              <div class="rounded-2xl border-2 border-navy-900 bg-white overflow-hidden shadow-sm">
+                <div class="bg-navy-900 text-white px-5 py-4 flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-400">${selectedSO.code}</span>
+                    <h4 class="text-xl font-extrabold">${selectedSO.title}</h4>
+                  </div>
+                  <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                    ${selectedSO.hours}
+                  </span>
+                </div>
+                <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                  <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <div class="text-xs font-bold uppercase text-slate-500 mb-1">Training &amp; Credentials</div>
+                    <div class="font-semibold text-navy-900">${selectedSO.hours}</div>
+                    <div class="text-xs text-slate-600 mt-1">${selectedSO.experience}</div>
+                  </div>
+                  <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <div class="text-xs font-bold uppercase text-slate-500 mb-1">Typical Workplace Scope</div>
+                    <div class="text-slate-800 leading-relaxed">${selectedSO.scope}</div>
+                  </div>
+                  <div class="sm:col-span-2 p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-950 text-xs sm:text-sm flex items-start gap-2.5">
+                    <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                    </svg>
+                    <span><strong>Key Note:</strong> ${selectedSO.highlight}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Presence & Contractor Highlight Note -->
+            <div class="p-5 rounded-2xl bg-navy-900 text-white flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-amber-500 text-navy-900 flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-amber-400 text-sm uppercase tracking-wider">Mandatory Presence &amp; Contractors (Sec. 35)</h4>
+                <p class="text-sm text-slate-200 mt-1 leading-relaxed">
+                  Designated <strong>Safety Officers must be present on all workdays</strong> (including shifts). Contractors and subcontractors must also assign their own safety officers—however, under <strong>Section 35</strong>, if a contractor deploys <strong>9 or fewer workers</strong> to a site, the <strong>principal</strong> covers those deployed workers under its safety officer oversight.
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        // Module 4
+        bodyHtml = `
+          <!-- Module 4 Hero Header -->
+          <div class="bg-gradient-to-r from-navy-900 to-navy-800 text-white p-6 sm:p-8">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-navy-900">Module 4 of 4</span>
+              <span class="text-xs text-slate-300 font-medium">Enforcement &amp; Accountability</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Enforcement, WSO, Reporting &amp; Penalties</h2>
+            <p class="text-slate-300 text-sm sm:text-base mt-1.5 max-w-2xl">
+              Master the Work Stoppage Order (WSO) protocol, 24-hour incident reporting rules, required DOLE audit trails, and graduated administrative fines.
+            </p>
+          </div>
+
+          <div class="p-6 sm:p-8 space-y-8">
+            <!-- WSO Visual Step-by-Step Flow -->
+            <div>
+              <h3 class="text-lg font-extrabold text-navy-900 mb-1">Work Stoppage Order (WSO) Protocol</h3>
+              <p class="text-sm text-slate-600 mb-4">Step-by-step response when imminent danger threatens worker life or limb:</p>
+              <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                ${[
+                  { step: '1', title: 'Imminent Danger Detected', desc: 'Life-threatening hazard or unsafe condition is identified on-site.' },
+                  { step: '2', title: 'Immediate Work Stoppage', desc: 'Safety Officer exercises authority to halt operations immediately.' },
+                  { step: '3', title: 'Notify DOLE (24 Hrs)', desc: 'Employer/SO reports the stoppage to DOLE Regional/Field Office within 24 hours.' },
+                  { step: '4', title: 'DOLE Validation', desc: 'DOLE validates the WSO, inspects hazards, and monitors corrective actions.' },
+                  { step: '5', title: 'Worker Protection', desc: 'Workers cannot be forced back to work while the WSO remains active.' }
+                ].map(s => `
+                  <div class="relative p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col">
+                    <div class="w-7 h-7 rounded-full bg-amber-500 text-navy-900 font-extrabold text-xs flex items-center justify-center mb-2.5">
+                      ${s.step}
+                    </div>
+                    <h4 class="font-bold text-sm text-navy-900 leading-snug">${s.title}</h4>
+                    <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">${s.desc}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Mandatory Reporting & Audit Trail -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div class="p-5 rounded-2xl border border-rose-200 bg-rose-50/40">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 mb-3">
+                  24-Hour Mandatory Rule
+                </div>
+                <h4 class="font-extrabold text-base text-navy-900 mb-2">Urgent DOLE Notifications</h4>
+                <p class="text-sm text-slate-700 leading-relaxed mb-3">
+                  Employers must notify DOLE within <strong>24 hours</strong> of any:
+                </p>
+                <ul class="space-y-1.5 text-sm text-slate-700">
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>Workplace accidents &amp; fatalities</li>
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>Disabling injuries</li>
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>Imminent danger situations / WSO</li>
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>Dangerous occurrences (e.g., explosions, collapses)</li>
+                </ul>
+              </div>
+
+              <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-navy-900 text-amber-400 mb-3">
+                  Compliance Audit Trail
+                </div>
+                <h4 class="font-extrabold text-base text-navy-900 mb-2">Regular DOLE Reports &amp; Records</h4>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li><strong>WAIR:</strong> Work Accident / Illness Report</li>
+                  <li><strong>AEDR:</strong> Annual Exposure Data Report</li>
+                  <li><strong>AMR:</strong> Annual Medical Report</li>
+                  <li><strong>Internal Logs:</strong> OSH Committee minutes, 8-hour worker induction records, and free PPE issuance logs.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Administrative Fines & Penalties -->
+            <div class="rounded-2xl bg-gradient-to-br from-navy-900 via-navy-800 to-slate-900 text-white p-6 shadow-md border border-slate-700">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-amber-400">R.A. 11058 Sec. 28 &bull; D.O. 252-25 Sec. 42</span>
+                  <h3 class="text-xl font-extrabold mt-1">Administrative Fines &amp; Progressive Penalties</h3>
+                  <p class="text-sm text-slate-300 mt-1.5 max-w-xl leading-relaxed">
+                    The statutory ceiling remains up to <strong>₱100,000 per day</strong> of uncorrected violation until full compliance is achieved. Under D.O. 252-25, fines are applied via a <strong>progressive/graduated schedule</strong>—meaning penalties escalate sharply for <strong>repeat offenses</strong> and <strong>willful non-compliance</strong>.
+                  </p>
+                </div>
+                <div class="bg-amber-500/15 border border-amber-400/40 rounded-2xl px-5 py-4 text-center flex-shrink-0">
+                  <div class="text-xs uppercase font-bold text-amber-300">Statutory Ceiling</div>
+                  <div class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">₱100,000</div>
+                  <div class="text-xs text-amber-200 font-medium">per day of violation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Module Footer Actions (Complete Button + Prev/Next Module)
+      const footerHtml = `
+        <div class="px-6 sm:px-8 py-5 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <button
+            type="button"
+            onclick="toggleModuleComplete(${modId})"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm transition-all shadow-sm ${
+              isDone
+                ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                : 'bg-navy-900 hover:bg-navy-800 text-white'
+            }"
+          >
+            <svg class="w-5 h-5 ${isDone ? 'text-white' : 'text-amber-400'}" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>${isDone ? 'Module Completed (Undo)' : 'Mark Module Complete'}</span>
+          </button>
+
+          <div class="flex items-center gap-2.5 w-full sm:w-auto">
+            ${modId > 1 ? `
+              <button type="button" onclick="selectModule(${modId - 1})" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 font-semibold text-sm transition-all">
+                &larr; Prev Module
+              </button>
+            ` : ''}
+            ${modId < 4 ? `
+              <button type="button" onclick="selectModule(${modId + 1})" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-900 font-bold text-sm transition-all">
+                Next Module &rarr;
+              </button>
+            ` : `
+              <button type="button" onclick="switchTab('quiz')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all">
+                Take Knowledge Quiz &rarr;
+              </button>
+            `}
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = bodyHtml + footerHtml;
+    }
+
+    // =========================================================================
+    // 7. VIEW 2: COMPLIANCE ESTIMATOR
+    // =========================================================================
+    function getComplianceSnapshot(size, risk, work) {
+      // Safety Officer Staffing Matrix
+      const soMatrix = {
+        micro: {
+          low: { level: '1 Safety Officer (4-Hr BOSH)', note: 'Baseline micro requirement; DOLE/LGU offers free first aid & safety training.' },
+          medium: { level: '1 Safety Officer (4-Hr BOSH)', note: 'Baseline micro requirement; DOLE/LGU offers free first aid & safety training.' },
+          high: { level: '1 SO1 (8-Hr BOSH)', note: 'Micro high-risk sites require at least SO1 designation on all workdays.' },
+          construction: { level: '1 SO2 (40-Hr COSH)', note: 'Construction sites require COSH-trained SO2 even for 1–9 workers.' }
+        },
+        small: {
+          low: { level: '1 SO1 (8-Hr BOSH)', note: 'Small low-risk establishment baseline.' },
+          medium: { level: '1 SO2 (40-Hr BOSH)', note: 'Moderate hazards require a 40-hour BOSH trained SO2.' },
+          high: { level: '1 SO2 (40-Hr BOSH)', note: 'High-risk small establishment requires dedicated SO2 oversight.' },
+          construction: { level: '2 SO2 (40-Hr COSH)', note: 'Small construction projects (10–99 workers) require 2 COSH-trained SO2s.' }
+        },
+        medium: {
+          low: { level: '1 SO2 (40-Hr BOSH)', note: 'Medium low-risk baseline.' },
+          medium: { level: '2 SO2 (40-Hr BOSH)', note: 'Medium-risk operations with 100–199 workers require 2 SO2s.' },
+          high: { level: '1 SO3 + 1 SO2', note: 'High-risk medium establishments require specialized SO3 leadership supported by SO2.' },
+          construction: { level: '3 SO2 or 2 SO3 (COSH)', note: 'Medium construction sites (100–199 workers) require 3 SO2s or 2 SO3s.' }
+        },
+        large: {
+          low: { level: '2 SO2 (40-Hr BOSH)', note: 'Large low-risk establishments require at least 2 SO2s covering all shifts.' },
+          medium: { level: '1 SO3 + 1 SO2', note: 'Large medium-risk establishments require SO3 leadership plus SO2 support.' },
+          high: { level: '1 SO4 (Consultant) + 2 SO3', note: 'Large high-risk sites require DOLE-accredited SO4 consultant oversight and SO3 team.' },
+          construction: { level: '2 SO3 + 1 SO4 (COSH/Consultant)', note: 'Large construction sites (200–500+ workers) require 2 SO3s plus 1 DOLE-accredited SO4.' }
+        }
+      };
+
+      const soInfo = soMatrix[size][risk];
+      const committeeRequired = size !== 'micro';
+
+      // Tailored Program Checkboxes
+      const checklist = [
+        'Conduct mandatory 8-hour paid OSH orientation (free of charge) for all workers prior to deployment.',
+        'Maintain a living, periodically updated OSH Program covering psychosocial (stress, bullying, harassment) & climate (extreme heat) hazards.',
+        'Post clear safety signages in a language or dialect understood by workers.',
+        'Provide free medical exams and facilitate UHC primary care facility registration/referral.',
+        'Maintain 24-hour DOLE incident reporting workflow plus WAIR, AEDR, AMR, and PPE logs.'
+      ];
+
+      if (work === 'hybrid') {
+        checklist.unshift(
+          'Perform Remote/WFH hazard & ergonomics assessments for home/alternative workplaces.',
+          'Establish clear remote emergency communication, psychosocial support, and incident reporting channels for WFH staff.'
+        );
+      }
+
+      if (risk === 'high' || risk === 'construction') {
+        checklist.push(
+          'Provide free DOLE/standard-approved PPE with documented issuance & inspection logs.',
+          'Brief Safety Officers & supervisors on immediate Work Stoppage Order (WSO) execution for imminent danger.'
+        );
+      }
+
+      if (size === 'micro') {
+        checklist.push(
+          'Coordinate with DOLE Regional/Field Office or LGU for free micro-enterprise first aid & 4-hour safety training.'
+        );
+      }
+
+      return { soInfo, committeeRequired, checklist };
+    }
+
+    function renderEstimator() {
+      const { size, risk, work } = appState.estimator;
+
+      // Update active button styles
+      document.querySelectorAll('.est-size-btn').forEach(btn => {
+        const active = btn.dataset.size === size;
+        btn.className = `est-btn est-size-btn text-left p-3.5 rounded-xl border-2 transition-all ${
+          active ? 'bg-navy-900 text-white border-amber-500 shadow-sm' : 'bg-slate-50 text-slate-800 border-slate-200 hover:border-slate-300'
+        }`;
+      });
+      document.querySelectorAll('.est-risk-btn').forEach(btn => {
+        const active = btn.dataset.risk === risk;
+        btn.className = `est-btn est-risk-btn w-full text-left p-3.5 rounded-xl border-2 transition-all flex items-center justify-between ${
+          active ? 'bg-navy-900 text-white border-amber-500 shadow-sm' : 'bg-slate-50 text-slate-800 border-slate-200 hover:border-slate-300'
+        }`;
+      });
+      document.querySelectorAll('.est-work-btn').forEach(btn => {
+        const active = btn.dataset.work === work;
+        btn.className = `est-btn est-work-btn text-left p-3.5 rounded-xl border-2 transition-all ${
+          active ? 'bg-navy-900 text-white border-amber-500 shadow-sm' : 'bg-slate-50 text-slate-800 border-slate-200 hover:border-slate-300'
+        }`;
+      });
+
+      const snap = getComplianceSnapshot(size, risk, work);
+      const sizeLabels = { micro: 'Micro (1–9)', small: 'Small (10–99)', medium: 'Medium (100–199)', large: 'Large (200–500+)' };
+      const riskLabels = { low: 'General Low Risk', medium: 'General Medium Risk', high: 'General High Risk', construction: 'Construction' };
+      const workLabels = { onsite: 'On-site Only', hybrid: 'Hybrid / Remote (WFH)' };
+
+      const output = document.getElementById('estimator-output');
+      output.innerHTML = `
+        <div class="bg-gradient-to-r from-navy-900 to-navy-800 text-white p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+              Live Compliance Snapshot
+            </span>
+            <span class="text-xs text-slate-300 font-medium">
+              ${sizeLabels[size]} &bull; ${riskLabels[risk]} &bull; ${workLabels[work]}
+            </span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-extrabold tracking-tight">Your D.O. 252-25 Compliance Snapshot</h3>
+        </div>
+
+        <div class="p-6 space-y-5">
+          <!-- Key Metrics Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Safety Officer -->
+            <div class="p-4 rounded-xl bg-amber-50 border border-amber-200">
+              <div class="text-xs font-bold uppercase tracking-wider text-amber-800 mb-1">Recommended Safety Officer(s)</div>
+              <div class="text-lg font-extrabold text-navy-900">${snap.soInfo.level}</div>
+              <p class="text-xs text-amber-900/80 mt-1.5 leading-relaxed">${snap.soInfo.note}</p>
+            </div>
+
+            <!-- OSH Committee -->
+            <div class="p-4 rounded-xl ${snap.committeeRequired ? 'bg-emerald-50 border-emerald-200' : 'bg-slate-50 border-slate-200'} border">
+              <div class="text-xs font-bold uppercase tracking-wider ${snap.committeeRequired ? 'text-emerald-800' : 'text-slate-600'} mb-1">OSH Committee</div>
+              <div class="text-lg font-extrabold text-navy-900">
+                ${snap.committeeRequired ? 'Mandatory (10+ Workers)' : 'Streamlined (Micro 1–9)'}
+              </div>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                ${snap.committeeRequired
+                  ? 'Must form an active OSH Committee with employer & worker representatives and keep regular meeting minutes.'
+                  : 'Formal multi-member committee is not required for 1–9 workers; Safety Officer leads workplace safety coordination.'}
+              </p>
+            </div>
+          </div>
+
+          <!-- Mandatory Training Banner -->
+          <div class="p-4 rounded-xl bg-navy-900 text-white flex items-center gap-3.5">
+            <div class="w-9 h-9 rounded-lg bg-amber-500 text-navy-900 flex items-center justify-center flex-shrink-0 font-extrabold text-sm">
+              8h
+            </div>
+            <div>
+              <div class="text-sm font-bold">Mandatory 8-Hour Paid OSH Orientation</div>
+              <div class="text-xs text-slate-300">Required for all workers prior to deployment at no cost to employees.</div>
+            </div>
+          </div>
+
+          <!-- Tailored Program Checkboxes -->
+          <div>
+            <h4 class="text-sm font-extrabold text-navy-900 mb-2.5 flex items-center justify-between">
+              <span>Tailored D.O. 252-25 Program Action Items</span>
+              ${work === 'hybrid' ? '<span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">WFH Provisions Included</span>' : ''}
+            </h4>
+            <div class="space-y-2">
+              ${snap.checklist.map((item, idx) => `
+                <label class="flex items-start gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition-colors">
+                  <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer" />
+                  <span class="text-xs sm:text-sm text-slate-700 leading-relaxed">${item}</span>
+                </label>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Formal Filing Disclaimer -->
+          <div class="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-600 flex items-start gap-2.5">
+            <svg class="w-4 h-4 text-slate-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+            </svg>
+            <span>
+              <strong>Advisory Note:</strong> This estimator provides a quick educational baseline. Always consult the exact sector-specific tables in <strong>D.O. 252-25 and its Annexes (A&ndash;E)</strong> for formal DOLE filings, multi-shift operations, or specialized industry rules.
+            </span>
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 8. VIEW 3: FLASHCARDS MODE
+    // =========================================================================
+    let fcDeck = [...FLASHCARDS];
+    let fcIndex = 0;
+    let fcFlipped = false;
+
+    function renderFlashcard() {
+      const card = fcDeck[fcIndex];
+      const status = appState.flashcardMastery[card.id];
+
+      document.getElementById('fc-category').textContent = card.category;
+      document.getElementById('fc-front-text').textContent = card.front;
+      document.getElementById('fc-back-text').textContent = card.back;
+      document.getElementById('fc-back-ref').textContent = card.ref;
+      document.getElementById('fc-current-num').textContent = fcIndex + 1;
+      document.getElementById('fc-total-num').textContent = fcDeck.length;
+
+      const pill = document.getElementById('fc-status-pill');
+      if (status === 'gotit') {
+        pill.textContent = 'Got It ✓';
+        pill.className = 'text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30';
+      } else if (status === 'review') {
+        pill.textContent = 'Needs Review';
+        pill.className = 'text-xs font-bold px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30';
+      } else {
+        pill.textContent = 'Unmarked';
+        pill.className = 'text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-700/80 text-slate-300';
+      }
+
+      const inner = document.getElementById('fc-card-inner');
+      if (fcFlipped) {
+        inner.classList.add('rotate-y-180');
+      } else {
+        inner.classList.remove('rotate-y-180');
+      }
+
+      // Mastery counters
+      const values = Object.values(appState.flashcardMastery);
+      document.getElementById('fc-gotit-count').textContent = values.filter(v => v === 'gotit').length;
+      document.getElementById('fc-review-count').textContent = values.filter(v => v === 'review').length;
+    }
+
+    function flipFlashcard() {
+      fcFlipped = !fcFlipped;
+      renderFlashcard();
+    }
+
+    function nextFlashcard() {
+      fcFlipped = false;
+      fcIndex = (fcIndex + 1) % fcDeck.length;
+      renderFlashcard();
+    }
+
+    function prevFlashcard() {
+      fcFlipped = false;
+      fcIndex = (fcIndex - 1 + fcDeck.length) % fcDeck.length;
+      renderFlashcard();
+    }
+
+    function shuffleFlashcards() {
+      for (let i = fcDeck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [fcDeck[i], fcDeck[j]] = [fcDeck[j], fcDeck[i]];
+      }
+      fcIndex = 0;
+      fcFlipped = false;
+      renderFlashcard();
+      showToast('Flashcard deck shuffled!', 'amber');
+    }
+
+    function markFlashcard(status) {
+      const card = fcDeck[fcIndex];
+      appState.flashcardMastery[card.id] = status;
+      saveState();
+      renderFlashcard();
+      showToast(status === 'gotit' ? 'Marked as "Got It!"' : 'Flagged for review.', status === 'gotit' ? 'emerald' : 'amber');
+    }
+
+    // =========================================================================
+    // 9. VIEW 4: KNOWLEDGE QUIZ
+    // =========================================================================
+    let quizState = {
+      current: 0,
+      selected: null,
+      score: 0,
+      answers: [], // { qIdx, chosen, correct }
+      finished: false
+    };
+
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+
+      if (quizState.finished) {
+        const pct = Math.round((quizState.score / QUIZ_QUESTIONS.length) * 100);
+        let badgeTitle = 'OSH Learner';
+        let badgeColor = 'bg-amber-100 text-amber-800 border-amber-300';
+        let msg = 'Good effort! Review the learning modules and flashcards to sharpen your D.O. 252-25 mastery.';
+
+        if (pct >= 90) {
+          badgeTitle = 'OSH Compliance Champion';
+          badgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+          msg = 'Outstanding! You have a strong command of DOLE Department Order No. 252, Series of 2025.';
+        } else if (pct >= 70) {
+          badgeTitle = 'Workplace Safety Advocate';
+          badgeColor = 'bg-sky-100 text-sky-800 border-sky-300';
+          msg = 'Great job! You understand the core principles and updates of D.O. 252-25.';
+        }
+
+        container.innerHTML = `
+          <div class="bg-gradient-to-r from-navy-900 to-navy-800 text-white p-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-500 text-navy-900 mb-4 shadow-lg">
+              <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 002.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 012.916.52 6.003 6.003 0 01-5.395 4.972m0 0a6.726 6.726 0 01-2.749 1.35m0 0a6.772 6.772 0 01-3.044 0" />
+              </svg>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold">Quiz Completed!</h2>
+            <div class="mt-3 text-4xl sm:text-5xl font-extrabold text-amber-400">${quizState.score} / ${QUIZ_QUESTIONS.length}</div>
+            <div class="text-sm text-slate-300 mt-1">Accuracy: ${pct}%</div>
+            <div class="mt-4">
+              <span class="inline-block px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider border ${badgeColor}">
+                ${badgeTitle}
+              </span>
+            </div>
+            <p class="text-sm text-slate-300 max-w-lg mx-auto mt-3">${msg}</p>
+            <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+              <button type="button" onclick="retakeQuiz()" class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-900 font-extrabold text-sm shadow-md transition-all">
+                Retake Quiz
+              </button>
+              <button type="button" onclick="switchTab('modules')" class="px-5 py-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-semibold text-sm transition-all">
+                Back to Modules
+              </button>
+            </div>
+          </div>
+
+          <!-- Compact Question Review -->
+          <div class="p-6 space-y-3">
+            <h3 class="text-sm font-extrabold uppercase tracking-wider text-slate-500">Answer Summary</h3>
+            ${quizState.answers.map((ans, idx) => {
+              const qObj = QUIZ_QUESTIONS[ans.qIdx];
+              return `
+                <div class="p-3.5 rounded-xl border ${ans.correct ? 'border-emerald-200 bg-emerald-50/40' : 'border-rose-200 bg-rose-50/40'} text-sm">
+                  <div class="font-bold text-navy-900">${idx + 1}. ${qObj.q}</div>
+                  <div class="text-xs mt-1 ${ans.correct ? 'text-emerald-700' : 'text-rose-700'} font-semibold">
+                    ${ans.correct ? '✓ Correct' : `✗ Correct answer: ${qObj.options[qObj.answer]}`}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+        return;
+      }
+
+      const qObj = QUIZ_QUESTIONS[quizState.current];
+      const hasAnswered = quizState.selected !== null;
+      const progressPct = Math.round(((quizState.current + (hasAnswered ? 1 : 0)) / QUIZ_QUESTIONS.length) * 100);
+
+      container.innerHTML = `
+        <!-- Quiz Header -->
+        <div class="bg-navy-900 text-white p-6">
+          <div class="flex items-center justify-between text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">
+            <span>Question ${quizState.current + 1} of ${QUIZ_QUESTIONS.length}</span>
+            <span class="text-emerald-400">Score: ${quizState.score}</span>
+          </div>
+          <div class="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
+            <div class="h-full bg-amber-400 rounded-full transition-all duration-300" style="width: ${progressPct}%"></div>
+          </div>
+        </div>
+
+        <!-- Question Body -->
+        <div class="p-6 sm:p-8">
+          <h3 class="text-lg sm:text-xl font-extrabold text-navy-900 leading-snug mb-6">
+            ${qObj.q}
+          </h3>
+
+          <div class="space-y-3">
+            ${qObj.options.map((opt, idx) => {
+              let btnStyle = 'bg-white border-slate-200 hover:border-amber-400 hover:bg-amber-50/30 text-slate-800';
+              let letterStyle = 'bg-slate-100 text-slate-600';
+
+              if (hasAnswered) {
+                if (idx === qObj.answer) {
+                  btnStyle = 'bg-emerald-50 border-emerald-500 text-emerald-950 font-semibold';
+                  letterStyle = 'bg-emerald-500 text-white';
+                } else if (idx === quizState.selected) {
+                  btnStyle = 'bg-rose-50 border-rose-500 text-rose-950';
+                  letterStyle = 'bg-rose-500 text-white';
+                } else {
+                  btnStyle = 'bg-slate-50 border-slate-200 text-slate-400 opacity-75';
+                }
+              }
+
+              const letter = String.fromCharCode(65 + idx);
+              return `
+                <button
+                  type="button"
+                  ${hasAnswered ? 'disabled' : ''}
+                  onclick="selectQuizOption(${idx})"
+                  class="w-full text-left p-4 rounded-xl border-2 transition-all flex items-start gap-3.5 ${btnStyle} ${hasAnswered ? 'cursor-default' : 'cursor-pointer'}"
+                >
+                  <span class="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-extrabold flex-shrink-0 ${letterStyle}">
+                    ${letter}
+                  </span>
+                  <span class="text-sm sm:text-base leading-snug pt-0.5">${opt}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- Instant Explanation -->
+          ${hasAnswered ? `
+            <div class="mt-6 p-4 rounded-xl border ${quizState.selected === qObj.answer ? 'bg-emerald-50 border-emerald-200 text-emerald-950' : 'bg-amber-50 border-amber-200 text-amber-950'}">
+              <div class="text-xs font-extrabold uppercase tracking-wider mb-1 ${quizState.selected === qObj.answer ? 'text-emerald-700' : 'text-amber-800'}">
+                ${quizState.selected === qObj.answer ? '✓ Correct Answer' : 'Explanation'}
+              </div>
+              <p class="text-sm leading-relaxed">${qObj.explanation}</p>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+              <button
+                type="button"
+                onclick="nextQuizQuestion()"
+                class="px-6 py-3 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-bold text-sm shadow-sm transition-all"
+              >
+                ${quizState.current === QUIZ_QUESTIONS.length - 1 ? 'Finish & View Score &rarr;' : 'Next Question &rarr;'}
+              </button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function selectQuizOption(idx) {
+      if (quizState.selected !== null) return;
+      quizState.selected = idx;
+      const isCorrect = idx === QUIZ_QUESTIONS[quizState.current].answer;
+      if (isCorrect) quizState.score += 1;
+      quizState.answers.push({ qIdx: quizState.current, chosen: idx, correct: isCorrect });
+      renderQuiz();
+    }
+
+    function nextQuizQuestion() {
+      if (quizState.current < QUIZ_QUESTIONS.length - 1) {
+        quizState.current += 1;
+        quizState.selected = null;
+        renderQuiz();
+      } else {
+        quizState.finished = true;
+        appState.quizCompleted = true;
+        if (appState.quizBestScore === null || quizState.score > appState.quizBestScore) {
+          appState.quizBestScore = quizState.score;
+        }
+        saveState();
+        updateGlobalProgress();
+        renderQuiz();
+        showToast(`Quiz completed! Score: ${quizState.score}/10`, 'emerald');
+      }
+    }
+
+    function retakeQuiz() {
+      quizState = { current: 0, selected: null, score: 0, answers: [], finished: false };
+      renderQuiz();
+    }
+
+    // =========================================================================
+    // 10. INITIALIZATION & EVENT BINDINGS
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      // Tab switching
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+      });
+
+      // Reset Progress inline confirmation
+      const resetBtn = document.getElementById('reset-progress-btn');
+      const resetBar = document.getElementById('reset-confirm-bar');
+      resetBtn.addEventListener('click', () => resetBar.classList.toggle('hidden'));
+      document.getElementById('confirm-reset-no').addEventListener('click', () => resetBar.classList.add('hidden'));
+      document.getElementById('confirm-reset-yes').addEventListener('click', () => {
+        appState = structuredClone(defaultState);
+        saveState();
+        resetBar.classList.add('hidden');
+        retakeQuiz();
+        updateGlobalProgress();
+        renderModuleSidebar();
+        renderActiveModule();
+        renderEstimator();
+        renderFlashcard();
+        showToast('All learning progress has been reset.', 'amber');
+      });
+
+      // Estimator buttons
+      document.querySelectorAll('.est-size-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.estimator.size = btn.dataset.size;
+          saveState();
+          renderEstimator();
+        });
+      });
+      document.querySelectorAll('.est-risk-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.estimator.risk = btn.dataset.risk;
+          saveState();
+          renderEstimator();
+        });
+      });
+      document.querySelectorAll('.est-work-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.estimator.work = btn.dataset.work;
+          saveState();
+          renderEstimator();
+        });
+      });
+
+      // Flashcard events
+      const fcStage = document.getElementById('fc-stage');
+      fcStage.addEventListener('click', flipFlashcard);
+      fcStage.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' || e.code === 'Enter') {
+          e.preventDefault();
+          flipFlashcard();
+        }
+      });
+      document.getElementById('fc-prev-btn').addEventListener('click', prevFlashcard);
+      document.getElementById('fc-next-btn').addEventListener('click', nextFlashcard);
+      document.getElementById('fc-shuffle-btn').addEventListener('click', shuffleFlashcards);
+      document.getElementById('fc-gotit-btn').addEventListener('click', () => markFlashcard('gotit'));
+      document.getElementById('fc-review-btn').addEventListener('click', () => markFlashcard('review'));
+
+      // Initial render
+      updateGlobalProgress();
+      renderModuleSidebar();
+      renderActiveModule();
+      renderEstimator();
+      renderFlashcard();
+      renderQuiz();
+      switchTab(appState.activeTab || 'modules');
+    });
+  </script>
+</body>
+</html>
